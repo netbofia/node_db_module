@@ -5,10 +5,10 @@
 class DB{
   constructor(configPath,tableDir){
     var config = require("../"+configPath);
-    
     var Sequelize = require('sequelize');
     var glob = require('glob');
     var path = require('path');
+    
     //DB credentials
     this.db = {
       sequelize: new Sequelize(
@@ -28,10 +28,10 @@ class DB{
     //This may be bad for performance 
     var tables=glob.sync(tableDir+'/'+'!([a-z]*.js|*.[^j][^s]*|.gitignore)')
     //Table / attribute association
-    for( index in tables){
-      var table=path.basename(tables[index],'.js');
+    tables.forEach(table=>{
+      var table=path.basename(table,'.js');
       db[table]=db.sequelize.import('./'+table);
-    }
+    })
 
     //Foreign key association
     Object.keys(db).forEach(function(modelName) {

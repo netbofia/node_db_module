@@ -1,6 +1,6 @@
 {
   "name": "node_db_module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This is a node module to provide db access to mysql",
   "main": "app.js",
   "dependencies": {
