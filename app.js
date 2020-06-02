@@ -1,4 +1,4 @@
-var DB=require('./sqldb')
-var db=new DB('./.config_res').db
-
-module.exports=db
+module.exports=function(config,tabledir){
+  const DB=require('./sqldb')
+  return new DB(config,tabledir).db
+}

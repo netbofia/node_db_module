@@ -3,9 +3,9 @@
  */
 
 class DB{
-  constructor(configPath){
+  constructor(configPath,tableDir){
     var config = require("../"+configPath);
-    console.log(config)
+    
     var Sequelize = require('sequelize');
     var glob = require('glob');
     var path = require('path');
@@ -17,7 +17,8 @@ class DB{
         config.sql.password,
         config.sql
       )
-    };    
+    };
+    let db=this.db    
     //This is the configuration file that has all the credentials
 
 
@@ -25,7 +26,7 @@ class DB{
 
     //Get all file names in this directory that start with a capital letter and have a Java script extension.
     //This may be bad for performance 
-    var tables=glob.sync(__dirname+'/'+'!([a-z]*.js|*.[^j][^s]*|.gitignore)')
+    var tables=glob.sync(tableDir+'/'+'!([a-z]*.js|*.[^j][^s]*|.gitignore)')
     //Table / attribute association
     for( index in tables){
       var table=path.basename(tables[index],'.js');

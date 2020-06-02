@@ -16,9 +16,8 @@
   "scripts": {
     "start": "node ./app.js",
     "test": "npm run test-unit",
-    "test-v1_3": "npm run test-unit-v1_3",
-    "test-unit": "NODE_ENV=test mocha --exit '**/*.spec.js'",
-    "test-basic": "NODE_ENV=test mocha --exit 'components/**/helpers/*.spec.js'"
+    "test-unit": "NODE_ENV=test mocha --exit 'app.spec.js'",
+    "test-all": "NODE_ENV=test mocha --exit '**/*.spec.js'"
   },
   "repository": {
     "type": "git",
