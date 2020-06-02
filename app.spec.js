@@ -6,7 +6,7 @@ const glob = require('glob')
 let tables=glob.sync(__dirname+'/sqldb/[A-Z]*.js')
 let config=".config_res"
 let tableDir=__dirname+"/sqldb"
-const db=require('./app')(config,tableDir)
+const db=require('./app')(config,tableDir).db
 
 describe('Testing database setup',function(){
   it('Test table files exist!',function(){

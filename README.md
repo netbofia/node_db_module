@@ -3,6 +3,76 @@ Basic template to perform queries with sequelize
 
 Uses a simple guiding system to query multiple tables and build the resturn json with the results from the db query.
 
+``` bash
+  npm install node_db_module --save
+
+  
+
+``` 
+Example of credentials file
+
+``` JavaScript
+module.exports = {
+  //exmaple file
+  sql: {
+    host:     '127.0.0.1', 
+    database: 'dbname',
+    username: 'user',
+    password: 'password',
+    //operatorsAliases: false,
+    dialect: 'mysql', // PostgreSQL, MySQL, MariaDB, SQLite and MSSQL See more: http://docs.sequelizejs.com/en/latest/
+    logging: false,   //True starts to make it cry.
+    timezone: '+00:00',
+  },
+  seedDB:false,
+  seedMongoDB:false,
+  seedDBForce:true,
+  db:'sql', // mongo,sql if you want to use any SQL change dialect above in sql config
+}
+``` 
+
+Starting instance of db module requires to variables:
+- The path to the credentials file
+- The path to the tables dir. Note: Tables must start with capital letter!
+
+``` JavaScript
+  const db=require('node_db_module')(credentials,pathtotables)
+``` 
+
+Example of table file
+```JavaScript  
+  'use strict';
+
+  module.exports = function(sequelize, DataTypes) {
+    const ExampleTable = sequelize.define('ExampleTable', {
+      id: { 
+        type: DataTypes.INTEGER(11),
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: false,
+        unique: true,
+      },
+    firstName: DataTypes.STRING(254),
+    lastName: DataTypes.STRING(254),
+  }, {
+      tableName: 'ExampleTable',
+      timestamps: false,
+      underscored: false,
+
+     classMethods: {
+        associate: function associate(models) {
+          ExampleTable.belongsTo(models.OtherTable, {
+            foreignKey: 'id',              //on Study
+            targetKey: 'exampleTable_id',  //foreign key  
+          });              
+        }
+      },
+    });
+
+    return ExampleTable;
+  };
+  ```
+
 ## Getting table data with a simpler database model
 This requires two dependencies the **structure** and the **controller**. Structure reflects the same filosophy of call structure explained in ../structures  
 

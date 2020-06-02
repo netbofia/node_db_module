@@ -5,7 +5,6 @@ let tables=glob.sync(__dirname+'/../sqldb/[A-Z]*.js')
 var controller=require('./getSpecifiedTables')
 
 
-
 beforeEach(function () {
   let sourceTable=getRandomTable(tables)
   let AssociatedTable=getRandomAssociation(db[sourceTable])
