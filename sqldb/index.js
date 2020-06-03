@@ -4,8 +4,10 @@
 
 class DB{
   constructor(configPath,tableDir){
-    var config = require("../"+configPath);
+    var config = require("../../../"+configPath);//require is relative to the package
+    console.log(configPath)
     var Sequelize = require('sequelize');
+    this.controller=require('./getSpecifiedTables')
     this.glob = require('glob');
     this.path = require('path');
     
@@ -28,7 +30,7 @@ class DB{
     //db tables  //Do this for all Keys in Object requeire(dir that start with capital letters)
     //Get all file names in this directory that start with a capital letter and have a Java script extension.
     //This may be bad for performance 
-    var tables=glob.sync(tableDir+'/'+'!([a-z]*.js|*.[^j][^s]*|.gitignore)')
+    var tables=glob.sync(tableDir+'/'+'!([a-z]*.js|*.[^j][^s]*|.gitignore)') //relative to call
     //Table / attribute association
     tables.forEach(table=>{
       var table=path.basename(table,'.js');
@@ -41,8 +43,11 @@ class DB{
         db[modelName].options.classMethods.associate(db);
       }
     });
-
   }
+  useController(sourceTable,tableConnections,structure){
+    retrun this.controller(sourceTable,tableConnections,structure)
+  }
+
 }
 
 
