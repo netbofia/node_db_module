@@ -8,7 +8,8 @@ class DB{
     var Sequelize = require('sequelize');
     this.glob = require('glob');
     this.path = require('path');
-    this.fs = require('fs')    
+    this.fs = require('fs')
+    this.controller=require('./getSpecifiedTables')
     //DB credentials
     let config = this.getCredentials(configPath);
     this.db = {
@@ -54,6 +55,9 @@ class DB{
       }
     });
   }
+  useController(sourceTable,tableConnections,structure){
+    return this.controller(sourceTable,tableConnections,structure)
+  }    
   getCredentials(credentialsPath){
     let credentials=this.fs.readFileSync(credentialsPath,'utf8')
     return JSON.parse(credentials)
