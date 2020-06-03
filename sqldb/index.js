@@ -26,6 +26,7 @@ class DB{
     let db=this.db 
     let glob=this.glob
     let path=this.path
+    let fs=this.fs
     //This is the configuration file that has all the credentials
     //db tables  //Do this for all Keys in Object requeire(dir that start with capital letters)
     //Get all file names in this directory that start with a capital letter and have a Java script extension.
@@ -36,8 +37,12 @@ class DB{
     //Table / attribute association
     tables.forEach(table=>{
       var table=path.basename(table,'.js');
-      console.log(`${tableDir}/${table}`)
-      db[table]=db.sequelize.import(`${tableDir}/${table}`);
+      let tablePath=`${tableDir}/${table}`
+      if(fs.existsSync(tablePath+".js")){
+        db[table]=db.sequelize.import(tablePath);
+      }else{
+        throw Error(`Path to ${table} was not found! This should be an absolute path! Otherwise it will be relative to the module.`)
+      }
     })
   }
   associate(){
