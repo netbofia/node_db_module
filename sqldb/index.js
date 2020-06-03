@@ -2,16 +2,15 @@
  * Created by Bruno Costa on 12-09-2020.
  */
 
+
 class DB{
-  constructor(configPath,tableDir){
-    var config = require("../../../"+configPath);//require is relative to the package
-    console.log(configPath)
+  constructor(configPath,tableDir){    
     var Sequelize = require('sequelize');
-    this.controller=require('./getSpecifiedTables')
     this.glob = require('glob');
     this.path = require('path');
-    
+    this.fs = require('fs')    
     //DB credentials
+    let config = this.getCredentials(configPath);
     this.db = {
       sequelize: new Sequelize(
         config.sql.database,
@@ -20,9 +19,10 @@ class DB{
         config.sql
       )
     };
-    this.associate(tableDir)
+    this.importTables(tableDir)
+    this.associate()
   }   
-  associate(tableDir){
+  importTables(tableDir){
     let db=this.db 
     let glob=this.glob
     let path=this.path
@@ -30,13 +30,18 @@ class DB{
     //db tables  //Do this for all Keys in Object requeire(dir that start with capital letters)
     //Get all file names in this directory that start with a capital letter and have a Java script extension.
     //This may be bad for performance 
-    var tables=glob.sync(tableDir+'/'+'!([a-z]*.js|*.[^j][^s]*|.gitignore)') //relative to call
+    
+    
+    var tables=glob.sync(tableDir+'/'+'!([a-z]*.js|*.[^j][^s]*|.gitignore)') //relative to call path
     //Table / attribute association
     tables.forEach(table=>{
       var table=path.basename(table,'.js');
-      db[table]=db.sequelize.import('./'+table);
+      console.log(`${tableDir}/${table}`)
+      db[table]=db.sequelize.import(`${tableDir}/${table}`);
     })
-
+  }
+  associate(){
+    let db=this.db 
     //Foreign key association
     Object.keys(db).forEach(function(modelName) {
       if ('classMethods' in db[modelName].options) {
@@ -44,12 +49,11 @@ class DB{
       }
     });
   }
-  useController(sourceTable,tableConnections,structure){
-    retrun this.controller(sourceTable,tableConnections,structure)
+  getCredentials(credentialsPath){
+    let credentials=this.fs.readFileSync(credentialsPath,'utf8')
+    return JSON.parse(credentials)
   }
-
 }
-
 
 
 module.exports = DB;

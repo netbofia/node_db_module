@@ -11,32 +11,33 @@ Uses a simple guiding system to query multiple tables and build the resturn json
 ``` 
 Example of credentials file
 
-``` JavaScript
-module.exports = {
-  //exmaple file
-  sql: {
-    host:     '127.0.0.1', 
-    database: 'dbname',
-    username: 'user',
-    password: 'password',
-    //operatorsAliases: false,
-    dialect: 'mysql', // PostgreSQL, MySQL, MariaDB, SQLite and MSSQL See more: http://docs.sequelizejs.com/en/latest/
-    logging: false,   //True starts to make it cry.
-    timezone: '+00:00',
+``` JSON
+{
+  "sql": {
+    "host":"127.0.0.1", 
+    "database":"db",
+    "username":"user",
+    "password":"pass",
+    "dialect":"mysql",
+    "logging":false,
+    "timezone":"+00:00"
   },
-  seedDB:false,
-  seedMongoDB:false,
-  seedDBForce:true,
-  db:'sql', // mongo,sql if you want to use any SQL change dialect above in sql config
+  "seedDB":false,
+  "seedMongoDB":false,
+  "seedDBForce":true,
+  "db":"sql"
 }
+
+  
+  
 ``` 
 
 Starting instance of db module requires to variables:
-- The path to the credentials file
-- The path to the tables dir. Note: Tables must start with capital letter!
+- The path relative/absoulte to credentials JSON
+- The absolute path to the tables dir. Note: Tables must start with capital letter!
 
 ``` JavaScript
-  const db=require('node_db_module')(credentials,pathtotables)
+  const db=require('node_db_module')(credentials,abspathtotables)
 ``` 
 
 Example of table file
