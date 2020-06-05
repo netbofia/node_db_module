@@ -9,7 +9,7 @@ class DB{
     this.glob = require('glob');
     this.path = require('path');
     this.fs = require('fs')
-    this.controller=require('./getSpecifiedTables')
+    this.controller=require('./../controllers/getSpecifiedTables')
     //DB credentials
     let config = this.getCredentials(configPath);
     this.db = {
