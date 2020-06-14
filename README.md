@@ -1,7 +1,7 @@
 # node_db_module
 Basic template to perform queries with sequelize 
 
-Uses a simple guiding system to query multiple tables and build the resturn json with the results from the db query.
+Uses a simple guiding system to query multiple tables and build the return json with the results from the db query.
 
 ``` bash
   npm install node_db_module --save
