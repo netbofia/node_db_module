@@ -56,7 +56,7 @@ class DB{
     });
   }
   useController(sourceTable,tableConnections,structure){
-    return this.controller(sourceTable,tableConnections,structure)
+    return this.controller(sourceTable,tableConnections,structure,this.db)
   }    
   getCredentials(credentialsPath){
     let credentials=this.fs.readFileSync(credentialsPath,'utf8')
