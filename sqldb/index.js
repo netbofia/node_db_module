@@ -59,8 +59,14 @@ class DB{
     return this.controller(sourceTable,tableConnections,structure,this.db)
   }    
   getCredentials(credentialsPath){
-    let credentials=this.fs.readFileSync(credentialsPath,'utf8')
-    return JSON.parse(credentials)
+    if(typeof credentialsPath == "string"){   
+    	let credentials=this.fs.readFileSync(credentialsPath,'utf8')
+    	return JSON.parse(credentials)
+    }else if(typeof credentialsPath == "object"){
+	return credentialsPath
+    }else{
+	return new Error("Invalid Credentials: Should be a path to a file or a json with the neccessay attributes. See documentation for the correct structure of the credentials file")     
+    }
   }
 }
 

@@ -33,7 +33,7 @@ Example of credentials file
 ``` 
 
 Starting instance of db module requires to variables:
-- The path relative/absoulte to credentials JSON
+- The path relative/absoulte to credentials JSON, or the required JSON strucutre. (For use with proccess.env vars)
 - The absolute path to the tables dir. Note: Tables must start with capital letter!
 
 ``` JavaScript
